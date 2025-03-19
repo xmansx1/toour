@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حجز الجولة السياحية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background: #004aad;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .container {
+            max-width: 600px;
+            margin: 120px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #c3e6cb;
+            font-size: 16px;
+            font-weight: bold;
+            display: none;
+        }
+        .total-price-container {
+            margin-top: 15px;
+            background: #e0f7e9;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #2d6a4f;
+            box-shadow: 0px 3px 5px rgba(0,0,0,0.1);
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn {
+            background: #ff9800;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        }
+        .btn:hover {
+            background: #e68900;
+        }
+        .tour-title {
+            color: #004aad;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    منصة الجولات السياحية
+</header>
+
+<div class="container">
+    <h2>🛒 حجز الجولة</h2>
+    
+    <!-- ✅ إضافة رسالة تأكيد الحجز -->
+    <div id="booking-success" class="success-message">✅ تم استلام طلب حجزك بنجاح! سنقوم بالتواصل معك لتأكيده في اسرع وقت .</div>
+    
+    {% if tour %}
+        <p class="tour-title">📍 الجولة: <strong>{{ tour.title }}</strong></p>
+        <p><strong>💰 السعر: {{ tour.price }} ريال</strong></p>
+    {% else %}
+        <p style="color: red;">⚠ لم يتم العثور على تفاصيل الجولة!</p>
+    {% endif %}
+
+    <form method="POST" id="booking-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="full_name">الاسم الكامل</label>
+            <input type="text" id="full_name" name="full_name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">البريد الإلكتروني</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="phone_number">رقم الجوال</label>
+            <input type="text" id="phone_number" name="phone_number" required>
+        </div>
+        <div class="form-group">
+            <label for="num_people">عدد الأشخاص</label>
+            <select id="num_people" name="num_people" required>
+                <option value="1">1 شخص</option>
+                <option value="2">2 أشخاص</option>
+                <option value="3">3 أشخاص</option>
+                <option value="4">4 أشخاص</option>
+                <option value="5">5 أشخاص</option>
+            </select>
+        </div>
+        <div class="total-price-container">
+            <p id="total-price">المجموع النهائي: 0 ريال</p>
+        </div>
+        
+        <div class="btn-container">
+            <button type="submit" class="btn">احجز الآن</button>
+            <a href="/" class="btn btn-back">🔙 العودة</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let pricePerPerson = parseFloat("{{ tour.price }}");
+        let numberOfPeople = document.getElementById("num_people");
+        let totalPriceElement = document.getElementById("total-price");
+        let bookingForm = document.getElementById("booking-form");
+        let successMessage = document.getElementById("booking-success");
+
+        function updateTotalPrice() {
+            let numPeople = parseInt(numberOfPeople.value) || 1;
+            let total = pricePerPerson * numPeople;
+            totalPriceElement.innerHTML = `المجموع النهائي: ${total.toLocaleString()} ريال`;
+        }
+
+        numberOfPeople.addEventListener("change", updateTotalPrice);
+        updateTotalPrice();
+
+        bookingForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            successMessage.style.display = "block";
+        });
+    });
+</script>
+
+</body>
+</html>

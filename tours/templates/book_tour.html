@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content">
+    <h2>حجز الجولة: {{ tour.title }} 🛒</h2>
+    <p><strong>💰 السعر:</strong> {{ tour.price }} ريال</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="id_full_name">👤 الاسم الكامل:</label>
+        {{ form.full_name }}
+
+        <label for="id_email">📧 البريد الإلكتروني:</label>
+        {{ form.email }}
+
+        <label for="id_phone_number">📞 رقم الجوال:</label>
+        {{ form.phone_number }}
+
+        <label for="id_num_people">👥 عدد الأشخاص:</label>
+        {{ form.num_people }}
+
+        <button type="submit" class="cta-button">✅ تأكيد الحجز</button>
+    </form>
+
+    <a href="{% url 'tour_detail' tour.id %}" class="back-link">🔙 العودة</a>
+</div>
+{% endblock %}

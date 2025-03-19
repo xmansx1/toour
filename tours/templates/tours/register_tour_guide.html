@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary">
+        <span>📍</span> تسجيل كمرشد سياحي
+    </h2>
+
+    <!-- ✅ عرض الرسائل بعد التسجيل -->
+    {% if messages %}
+        <div class="mt-4">
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %} text-center" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="card shadow-lg p-4 mt-4 mx-auto" style="max-width: 500px;">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_username">اسم المستخدم</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">👤</span>
+                    </div>
+                    {{ form.username }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="id_email">عنوان بريد إلكتروني</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">📧</span>
+                    </div>
+                    {{ form.email }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="id_phone_number">رقم الهاتف</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">📞</span>
+                    </div>
+                    {{ form.phone_number }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="id_password1">كلمة المرور</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">🔑</span>
+                    </div>
+                    {{ form.password1 }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="id_password2">تأكيد كلمة المرور</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">🔒</span>
+                    </div>
+                    {{ form.password2 }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-block mt-3">
+                🚀 تسجيل الآن
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

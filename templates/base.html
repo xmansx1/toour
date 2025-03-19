@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}منصة الجولات السياحية{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}">الرئيسية</a>
+            <a href="{% url 'tours' %}">الجولات</a>
+            <a href="{% url 'register_guide' %}">تسجيل المرشدين</a>
+        </nav>
+    </header>
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2025 منصة الجولات السياحية</p>
+    </footer>
+</body>
+</html>

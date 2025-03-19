@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>مرحبًا بك في منصة الجولات السياحية</h1>
+
+    <div class="tours">
+        {% for tour in tours %}
+        <div class="tour-card">
+            <h3>{{ tour.title }}</h3>
+
+            {% if tour.image and tour.image.url %}
+                <img src="{{ tour.image.url }}" class="card-img-top" alt="صورة الجولة" style="height: 200px; object-fit: cover;">
+            {% else %}
+                <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="صورة الجولة" style="height: 200px; object-fit: cover;">
+            {% endif %}
+
+            <p>{{ tour.description }}</p>
+            <a href="{% url 'tour_detail' tour.id %}" class="btn btn-primary">عرض التفاصيل</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
