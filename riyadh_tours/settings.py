@@ -75,7 +75,10 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -89,3 +92,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'xmansx1122@gmail.com'  # ضع بريدك الإلكتروني هنا
 EMAIL_HOST_PASSWORD = '123123'  # استخدم كلمة مرور التطبيق (App Password)
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ 
+
+ 
